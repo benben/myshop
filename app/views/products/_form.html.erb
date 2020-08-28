@@ -1,0 +1,34 @@
+<%= form_with(model: product, local: true, multipart: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <input multiple="multiple" type="file" name="product[images_attributes][][file]" id="product_images_attributes_files" />
+
+  <%= form.fields_for :images do |images_form| %>
+      <li>
+        <%= images_form.label :caption %>
+        <%= images_form.text_field :caption %>
+
+        <%= images_form.label :file %>
+        <%= images_form.file_field :file %>
+      </li>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
